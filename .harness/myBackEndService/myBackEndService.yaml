@@ -1,0 +1,37 @@
+pipeline:
+    name: myBackEndService
+    identifier: myBackEndService
+    projectIdentifier: dougproject
+    orgIdentifier: default
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: douglasjbothwellgithub
+                repoName: myBackEndService
+                build: <+input>
+    stages:
+        - stage:
+              name: buildFrontEndService
+              identifier: buildBackEndService
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: docsgkedbothwellciquickstart
+                          namespace: harness-delegate-ng
+                          automountServiceAccountToken: true
+                          nodeSelector: {}
+                  execution:
+                      steps:
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: pushToDockerRegistry
+                                identifier: pushToDockerRegistry
+                                spec:
+                                    connectorRef: dbothwelldockerhub
+                                    repo: dbothwell/mybackendservice
+                                    tags:
+                                        - latest
