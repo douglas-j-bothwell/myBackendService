@@ -1,0 +1,14 @@
+inputSet:
+  identifier: "triggertargetbranch"
+  name: "trigger-target-branch"
+  orgIdentifier: "default"
+  projectIdentifier: "dougproject"
+  pipeline:
+    identifier: "myBackEndService"
+    properties:
+      ci:
+        codebase:
+          build:
+            type: "branch"
+            spec:
+              branch: "<+trigger.branch>"
